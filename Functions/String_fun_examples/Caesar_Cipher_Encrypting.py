@@ -1,10 +1,9 @@
-alphabet = "abcdefghijklmnopqrstuvwxyz"
-punctuation = ".,?'! "
-message = 'xuo jxuhu! jxyi yi qd unqcfbu ev q squiqh syfxuh. ' \
-          'muhu oek qrbu je tusetu yj? y xefu ie! iudt cu q cuiiqwu rqsa myjx jxu iqcu evviuj!'
 
+message = 'xuo lyixqb! pxyi yi q ikfuh seeb syfxuh, jxqdai veh ixemydw cu! pxqj ubiu oek wej?'
 
 def encrypt(string, swift):
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    punctuation = ".,?'! "
     translated_message = ''
     for letter in string:
         if letter not in punctuation:
@@ -15,4 +14,8 @@ def encrypt(string, swift):
     return translated_message
 
 
-print(encrypt(message, 10))
+# print(encrypt(message, 10))
+
+message2 = 'bqdradyuzs ygxfubxq omqemd oubtqde fa oapq kagd yqeemsqe ue qhqz yadq eqogdq!'
+
+print(encrypt(message2, 14))
