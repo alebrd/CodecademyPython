@@ -41,7 +41,7 @@ proprietary_terms = ["she", "personality matrix", "sense of self", "self-preserv
 def censor_list(sentence, badwords):
     sentence = sentence.lower()
     sentence = sentence.split()
-    censored_words = []   # for debugging
+    censored_words = []  # for debugging
     for i in badwords:
         for words in sentence:
             if i in words:
@@ -49,9 +49,10 @@ def censor_list(sentence, badwords):
                 sentence.remove(words)
                 sentence.insert(pos, '*' * len(i))
                 censored_words.append(words)
-    print(censored_words)   # for debugging
+    print(censored_words)  # for debugging
     sentence_joined = " ".join(sentence).title()
     return sentence_joined
+
 
 # print(email_two)
 
@@ -66,4 +67,21 @@ print()
 print(censor_list(email_three, negative_words))
 
 
+def censor_concerned_tone(sentence, badwords):
+    sentence = sentence.lower()
+    sentence = sentence.split()
+    censored_words = []
+    for i in badwords:
+        for words in sentence:
+            if i in words:
+                censored_words.append(words)
+                if i != censored_words[-1]:
+                    pos = sentence.index(words)
+                    sentence.remove(words)
+                    sentence.insert(pos, '*' * len(i))
+    print(censored_words)  # for debugging
+    sentence_joined = " ".join(sentence).title()
+    return sentence_joined
 
+
+print(censor_concerned_tone(email_three, negative_words))
