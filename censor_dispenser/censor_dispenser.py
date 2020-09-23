@@ -65,6 +65,7 @@ def censor_concerned_tone(sentence, badwords):  # email_three
     sentence_joined = " ".join(sentence).title()
     return sentence_joined
 
+
 # print(censor_concerned_tone(email_three, negative_words))
 
 
@@ -75,35 +76,34 @@ def censor_lists_and_words(sentence, badwords, badwords2):  # email_four
     sentence = sentence.lower()
     sentence = sentence.split()
     censored_words = []  # for debugging
-    pos_ = []
-    pos_1 = []
+    pos_ = []   # index words not listed
+    pos_1 = []  # index words not listed too
     pos__ = []
-    pos__2 = []
-
+    pos__1 = []
+    new_badwords_list = []
     for i in badwords2:  # trying to find  the words index before and after the list badwords2
         for word3 in sentence:
             if i in word3:
                 pos_.append(sentence.index(word3) - 1)
                 pos_1.append(sentence.index(word3) + 1)
-                print(pos_)   # for debugging
+                print(pos_)  # for debugging
                 print(pos_1)  # for debugging
-    #for i in pos_:
-      #  for j in sentence:
-        #    sentence.remove(j)
-        #    sentence.insert(i, '*' * len(j))    # SE RIMUOVI UN INDEX POI TUTTI GLI INDEX SONO SBALLATI. RIPROVA DOMANI
-    for i in pos_:
-        print(sentence[i])
-    for i in badwords:    # trying to find  the words index before and after the list badwords
+
+    # SE RIMUOVI UN INDEX POI TUTTI GLI INDEX SONO SBALLATI. RIPROVA DOMANI
+
+    for i in badwords:  # trying to find  the words index before and after the list badwords
         for word3 in sentence:
             if i in word3:
                 pos__.append(sentence.index(word3) - 1)
-                pos__2.append(sentence.index(word3) + 1)
+                pos__1.append(sentence.index(word3) + 1)
                 print(pos__)
-                print(pos__2)
+                print(pos__1)
 
-    for word in pos_:
-        for i in sentence:
-            sentence[word].replace(i, '*' * len(i))
+    for j in sentence:
+        new_badwords_list.append(pos__[:])
+    for j in sentence:
+        new_badwords_list.append(pos__1[:])
+    print(new_badwords_list)
 
     #################################################################
 
@@ -122,9 +122,10 @@ def censor_lists_and_words(sentence, badwords, badwords2):  # email_four
                 sentence.remove(words2)
                 sentence.insert(pos, '*' * len(j))
                 censored_words.append(words2)
-    print(censored_words)   # for debugging
+    print(censored_words)  # for debugging
     sentence_joined = " ".join(sentence).title()
     return sentence_joined
+
 
 print(email_four)
 print(censor_lists_and_words(email_four, proprietary_terms, negative_words))
