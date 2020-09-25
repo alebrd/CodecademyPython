@@ -1,18 +1,118 @@
-gamers = []
+# 'Now we want to create a function that will update this list and add a new gamer ' \
+# to the this gamers list. Each gamer should be a dictionary with the following keys: ' \
+# "name": a string that contains the gamer\'s full or presumed name. E.g., "Vicky Very"' \
+# "availability": a list of strings containing the names of the days of the week that the' \
+#  gamer is available. E.g., ["Monday", "Thursday", "Sunday"]'
+
+gamers = []  # CREATING AN EMPTY LIST WHERE A LIST OF GAMERS WILL GO, EACH GAMER IS A DICTIONARY
 
 
-def add_gamer(gamer, gamers_list):
+# Create a function called add_gamer that takes two parameters:
+# gamer and gamers_list. The function should check
+# that the argument passed to the gamer parameter has both "name"
+# and a "availability" as keys and if so add gamer to gamers_list.
+
+
+def add_gamer(gamer, gamers_list):  # IF NAME AND AVAILABILITY IN GAMER. GAMERS_LIST/GAMERS.APPEND(GAMER)
     if gamer.get("name") and gamer.get("availability"):
         gamers_list.append(gamer)
     else:
         print("Gamer missing critical information")
 
 
-kimberly = {
+kimberly = {  # FIRST EXAMPLE OF DICTIONARY THAT WILL BE APPENDED TO THE LIST GAMER
     'name': "Kimberly Warner",
     'availability': ["Monday", "Tuesday", "Friday"]
 }
 
-add_gamer(kimberly, gamers)
+add_gamer(kimberly, gamers)  # THE FUNCTION WILL CHECK IF KIMBERLY HAS BOTH NAME AND AVAILABILITY
 
-print(gamers)
+print(gamers)  # PRINT THE LIST WITH THE FIRST DIC INSIDE
+
+# APPENDING ALL THESE GAMERS DICTIONARIES TO THE GAMER LIST
+
+add_gamer({'name': 'Thomas Nelson', 'availability': ["Tuesday", "Thursday", "Saturday"]}, gamers)
+add_gamer({'name': 'Joyce Sellers', 'availability': ["Monday", "Wednesday", "Friday", "Saturday"]}, gamers)
+add_gamer({'name': 'Michelle Reyes', 'availability': ["Wednesday", "Thursday", "Sunday"]}, gamers)
+add_gamer({'name': 'Stephen Adams', 'availability': ["Thursday", "Saturday"]}, gamers)
+add_gamer({'name': 'Joanne Lynn', 'availability': ["Monday", "Thursday"]}, gamers)
+add_gamer({'name': 'Latasha Bryan', 'availability': ["Monday", "Sunday"]}, gamers)
+add_gamer({'name': 'Crystal Brewer', 'availability': ["Thursday", "Friday", "Saturday"]}, gamers)
+add_gamer({'name': 'James Barnes Jr.', 'availability': ["Tuesday", "Wednesday", "Thursday", "Sunday"]}, gamers)
+add_gamer({'name': 'Michel Trujillo', 'availability': ["Monday", "Tuesday", "Wednesday"]}, gamers)
+
+print(gamers)  # PRINT THE LIST WITH THE DICs INSIDE
+
+
+# description = 'Now that we have a list of all of the people interested in game night, we want to be able to ' \
+#               'calculate which nights would have the most participation. First we need to create a frequency table ' \
+#               'which correlates each day of the week with gamer availability'
+
+
+def build_daily_frequency_table():
+    return {'Monday': 0,
+            'Tuesday': 0,
+            'Wednesday': 0,
+            'Thursday': 0,
+            'Friday': 0,
+            'Saturday': 0,
+            'Sunday': 0}
+
+
+count_availability = build_daily_frequency_table()
+
+
+# Next we need to count the number of people every night.
+#
+# Instructions
+#
+# Write a function called (calculate_availability) that takes a list of gamers
+# as an argument (gamers_list) and a frequency table (available_frequency).
+# The function should iterate through each gamer in gamers_list
+# and iterate through each day in the gamer's availability.
+# For each day in the gamer's availability, add one to that date on the frequency table.
+
+def calculate_availability(gamers_list, available_frequency):
+    for gamer in gamers_list:
+        for day in gamer['availability']:
+            available_frequency[day] += 1
+
+
+# Now let's use these tools to find the best night to run Abruptly Goblins!
+#
+# Instructions
+#
+# Call calculate_availability with gamers and count_availability. Print out count_availability afterwards.
+
+
+calculate_availability(gamers, count_availability)
+
+print(count_availability)
+
+
+# Lastly we need a way to pick the day with the most available people to attend so that
+# we can schedule game night on that night.
+# Instructions:
+#
+# Write a function find_best_night that takes a dictionary availability_table and returns
+# the key with the highest number.
+
+def find_best_night(availability_table):
+    best_availability = 0
+    for day, availability in availability_table.items():
+        if availability > best_availability:
+            best_night = day
+            best_availability = availability
+    return best_night
+
+# Now let's find the best day to host game night.
+#
+# Instructions
+#
+# Call find_best_night with count_availability, store the result in a variable called game_night.
+# Print out game_night to find out which day it is.
+
+
+game_night = find_best_night(count_availability)
+
+print(game_night)
