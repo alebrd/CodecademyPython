@@ -27,7 +27,7 @@ kimberly = {  # FIRST EXAMPLE OF DICTIONARY THAT WILL BE APPENDED TO THE LIST GA
 
 add_gamer(kimberly, gamers)  # THE FUNCTION WILL CHECK IF KIMBERLY HAS BOTH NAME AND AVAILABILITY
 
-print(gamers)  # PRINT THE LIST WITH THE FIRST DIC INSIDE
+# print(gamers)  # PRINT THE LIST WITH THE FIRST DIC INSIDE
 
 # APPENDING ALL THESE GAMERS DICTIONARIES TO THE GAMER LIST
 
@@ -41,7 +41,8 @@ add_gamer({'name': 'Crystal Brewer', 'availability': ["Thursday", "Friday", "Sat
 add_gamer({'name': 'James Barnes Jr.', 'availability': ["Tuesday", "Wednesday", "Thursday", "Sunday"]}, gamers)
 add_gamer({'name': 'Michel Trujillo', 'availability': ["Monday", "Tuesday", "Wednesday"]}, gamers)
 
-print(gamers)  # PRINT THE LIST WITH THE DICs INSIDE
+
+# print(gamers)  # PRINT THE LIST WITH THE DICs INSIDE
 
 
 # description = 'Now that we have a list of all of the people interested in game night, we want to be able to ' \
@@ -87,7 +88,8 @@ def calculate_availability(gamers_list, available_frequency):
 
 calculate_availability(gamers, count_availability)
 
-print(count_availability)
+
+# print(count_availability)
 
 
 # Lastly we need a way to pick the day with the most available people to attend so that
@@ -105,6 +107,7 @@ def find_best_night(availability_table):
             best_availability = availability
     return best_night
 
+
 # Now let's find the best day to host game night.
 #
 # Instructions
@@ -115,4 +118,74 @@ def find_best_night(availability_table):
 
 game_night = find_best_night(count_availability)
 
-print(game_night)
+
+# print(game_night)
+
+
+# And let's make a list of all of the people who are available that night.
+
+# Instructions
+
+# Create a function available_on_night that takes two parameters: gamers_list and day and returns a list of people who are available on that particular day.
+# Call available_on_night with gamers and game_night and save the result into the variable attending_game_night.
+# Print attending_game_night.
+
+def available_on_night(gamers_list, day):
+    return [gamer for gamer in gamers_list if day in gamer['availability']]
+
+
+attending_game_night = available_on_night(gamers, game_night)
+
+# print(attending_game_night)
+
+# Generating an E-mail for the Participants
+# With the best day for Abruptly Goblins! determined with computer precision, we need to let the attendees know that the game night is on a night they can attend. Let's start by creating a form email to send to each of the participants that we'll fill out with data later.
+
+# Instructions
+
+# Define a string, called form_email with interpolation variables {name}, {day_of_week}, and {game} (in case we decide we want to use this featureset to host a different game night). Use it to tell your gaming attendees the night their Abruptly Goblins! game can be played.
+
+
+form_email = '''
+Dear {name}, 
+
+you are invited to attend the {day_of_week}'s game night.
+
+We are going to play {game}'''
+
+
+# Instructions
+
+# Create a function send_email with three parameters: gamers_who_can_attend, day, and game. Print form_email for each gamer in gamers_who_can_attend with the appropriate day and game. Call send_email with attending_game_night, game_night, and "Abruptly Goblins!".
+
+def send_email(gamers_who_can_attend, day, game):
+    for gamer in gamers_who_can_attend:
+        print(form_email.format(name=gamer['name'], day_of_week=day, game=game))
+
+
+send_email(attending_game_night, game_night, 'Abruptly Goblins!')
+
+# Afterward
+# You feel bad for the folks who weren't able to attend on the decided upon game night, and try to use your currently written methods to have a second game night of the week.
+
+# Instructions
+
+# Create a list unable_to_attend_best_night of everyone in gamers that wasn't able to attend game night on game_night.
+# Create second_night_availability frequency table by calling build_daily_frequency_table.
+# Call calculate_availability with unable_to_attend_best_night and second_night_availability.
+# Call find_best_night with the now filled-in second_night_availability, save the results in second_night.
+
+unable_to_attend_best_night = [gamer for gamer in gamers if game_night not in gamer['availability']]
+second_night_availability = build_daily_frequency_table()
+calculate_availability(unable_to_attend_best_night, second_night_availability)
+second_night = find_best_night(second_night_availability)
+
+# Let's send out an email to everyone (whether they can attend the first night or not) whose marked themselves as available on our second game night.
+
+# Instructions
+
+# Create the list available_second_game_night by calling available_on_night with gamers and second_night
+# Let the gamers know by calling send_email with available_second_game_night, second_night, and "Abruptly Goblins!"
+
+available_second_game_night = available_on_night(gamers, second_night)
+send_email(available_second_game_night, second_night, 'Abruptly Goblins! ')

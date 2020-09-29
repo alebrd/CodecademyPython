@@ -23,7 +23,7 @@ def censor(sentence, badwords):  # email_one
             if i in words:
                 pos = sentence.index(words)
                 sentence.remove(words)
-                sentence.insert(pos, '*' * len(i))
+                sentence.insert(pos, 'X' * len(i))
                 censored_words.append(words)
     print(censored_words)  # for debugging
     sentence_joined = " ".join(sentence).title()
@@ -41,7 +41,7 @@ def censor_list(sentence, badwords):  # email_two
             if i in words:
                 pos = sentence.index(words)
                 sentence.remove(words)
-                sentence.insert(pos, '*' * len(i))
+                sentence.insert(pos, 'X' * len(i))
                 censored_words.append(words)
     # print(censored_words)   # for debugging
     sentence_joined = " ".join(sentence).title()
@@ -62,7 +62,7 @@ def censor_concerned_tone(sentence, badwords):  # email_three
                 if i != censored_words[-1]:
                     pos = sentence.index(words)
                     sentence.remove(words)
-                    sentence.insert(pos, '*' * len(i))
+                    sentence.insert(pos, 'X' * len(i))
     print(censored_words)  # for debugging
     sentence_joined = " ".join(sentence).title()
     return sentence_joined
@@ -75,23 +75,10 @@ def censor_concerned_tone(sentence, badwords):  # email_three
 punctuation = [",", "!", "?", ".", "%", "/", "(", ")"]
 
 
-def censor_lists_and_words(sentence, badwords, badwords2):  # email_four
-    sentence = sentence.lower()
-    sentence = sentence.split()
-    censored_words = []
-    forbidden_words = badwords + badwords2
-    for i in forbidden_words:
-        for word in sentence:
-            if i in word:
-
-                for x in punctuation:  # Censoring the forbidden words list
-                    word.strip(x)
-                pos = sentence.index(word)
-                sentence.remove(word)
-                sentence.insert(pos, 'X' * len(i))
-                censored_words.append(word)
+def censor_four(input_text, censored_list1, censored_list2):   # email four
+    censored_list1 += censored_list2
     input_text_words = []
-    for x in sentence:
+    for x in input_text.split(" "):
         x1 = x.split("\n")
         for word in x1:
             input_text_words.append(word)
@@ -99,16 +86,24 @@ def censor_lists_and_words(sentence, badwords, badwords2):  # email_four
         checked_word = input_text_words[i].lower()
         for x in punctuation:
             checked_word = checked_word.strip(x)
-        if checked_word in forbidden_words:
-
-            word_before = input_text_words[i - 1]    # Censoring the word before the targeted word
+        if checked_word in censored_list1:
+            ###############################
+            word_clean = input_text_words[i]   # Censoring the targeted word
+            censored_word = ""
+            for x in punctuation:
+                word_clean = word_clean.strip(x)
+            for x in range(0, len(word_clean)):
+                censored_word = censored_word + "X"
+            input_text_words[i] = input_text_words[i].replace(word_clean, censored_word)
+            #################################
+            word_before = input_text_words[i - 1]  # Censoring the word before the targeted word
             for x in punctuation:
                 word_before = word_before.strip(x)
             censored_word_before = ""
             for x in range(0, len(word_before)):
                 censored_word_before = censored_word_before + "X"
             input_text_words[i - 1] = input_text_words[i - 1].replace(word_before, censored_word_before)
-
+            #######################################
             word_after = input_text_words[i + 1]     # Censoring the word after the targeted word
             for x in punctuation:
                 word_after = word_after.strip(x)
@@ -116,10 +111,8 @@ def censor_lists_and_words(sentence, badwords, badwords2):  # email_four
             for x in range(0, len(word_after)):
                 censored_word_after = censored_word_after + "X"
             input_text_words[i + 1] = input_text_words[i + 1].replace(word_after, censored_word_after)
-
-    print(censored_words)  # debugging purpose
-    sentence_joined = " ".join(sentence).title()
-    return sentence_joined
+    return " ".join(input_text_words)
 
 
-print(censor_lists_and_words(email_four, proprietary_terms, negative_words))
+
+print(censor_four(email_four, negative_words, proprietary_terms))
