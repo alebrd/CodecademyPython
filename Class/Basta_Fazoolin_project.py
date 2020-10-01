@@ -1,6 +1,5 @@
 class Menu:
     def __init__(self, name, items, start_time, end_time):
-        self.purchased_itmes = self.calculate_bill()
         self.name = name
         self.items = items
         self.start_time = start_time
@@ -11,12 +10,13 @@ class Menu:
                                                                                 self.end_time)
 
     def calculate_bill(self, purchased_items):
+        self.purchased_itmes = purchased_items
         if type(self.purchased_itmes) is list:
             count = 0
             for i in purchased_items:
                 if i in self.items:
                     count += self.items[i]
-            return count
+        print(count)
 
 
 brunch = Menu('brunch', {
@@ -41,3 +41,31 @@ kids = Menu('kids', {
 print(brunch)
 
 brunch.calculate_bill(['pancakes', 'home fries', 'coffee'])
+
+early_bird.calculate_bill(['salumeria plate', 'mushroom ravioli (vegan)'])
+
+
+class Franchise:
+    def __init__(self, address, menus):
+        self.address = address
+        self.menus = menus
+
+    def __repr__(self):
+        return 'The address is \'{}\'.'.format(self.address)
+
+    def available_menus(self, time):
+        available_menus_lst = []
+        if type(time) is int:
+            for menu in self.menus:
+                if menu.start_time < time < menu.end_time:
+                    available_menus_lst.append(menu.name)
+
+        print(available_menus_lst)
+
+
+flagship_store = Franchise('1232 West End Road', [brunch, early_bird, dinner, kids])
+new_installment = Franchise('12 East Mulberry Street', [brunch, early_bird, dinner, kids])
+
+print(flagship_store)
+
+flagship_store.available_menus(12)
