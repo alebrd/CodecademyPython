@@ -66,5 +66,5 @@ class Trainer:
     def attack_other_trainer(self, other_trainer):
         pass
     def heal_current_poke(self):
-        
+        pass
 
