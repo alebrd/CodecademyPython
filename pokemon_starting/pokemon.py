@@ -1,3 +1,4 @@
+import inspect
 class Pokemon:
     def __init__(self, name, level, type_, health):
         self.name = name
@@ -23,6 +24,8 @@ class Pokemon:
         if self.health == 0:
             self.is_knocked_out = True
         return 'Your {} has 0 health points so is gone.'.format(self.name)
+    def get_name(self):
+        return self.name
 
     def attack(self, another_pokemon):
         points = 25
@@ -61,7 +64,8 @@ class Pokemon:
               '-Enemy\'s {} is type: {}.\n'
               '-The Enemy\'s Pokemon has lost {} points.\n'
               '-Your Pokemon current Health is {}.\n'
-              '-Enemy\'s Pokemon Health is {}'.format(self.name, self.type_, another_pokemon.name, another_pokemon.type_, points,
+              '-Enemy\'s Pokemon Health is {}'.format(self.name, self.type_, another_pokemon.name,
+                                                      another_pokemon.type_, points,
                                                       self.health, another_pokemon.health))
 
 
@@ -91,21 +95,30 @@ class Trainer:
                 current.gain_health(100)
         return f'Your current Pokemon \'{self.current_pokemon}\' has healed'
 
-    def switch_current(self):
-        pass
+    def switch_current(self, name):
+        if type(name) is str:
+            for switch in self.pokemons:
+                switch_name = switch.get_name()
+                if name == switch_name:
+                    self.current_pokemon = switch
+                # for i in switch:
+                #     if name is in self.pokemons.name:
+                #         self.current_pokemon = switch
+        return self.current_pokemon.name
 
 
-Gabri = Pokemon('Gabri', 10, 'Fire', 50)
+
+Gabri = Pokemon('Gabri', 10, 'Fire', 100)
 Niki = Pokemon('Niki', 10, 'Grass', 100)
+Thomas = Pokemon('Thomas', 10, 'Grass', 100)
+Gianfro = Pokemon('Gianfro', 10, 'Water', 100)
 
-#Gabri.attack(Niki)
+# Gabri.attack(Niki)
 
 Alessandro = Trainer('Alessandro', [Gabri], Gabri, 5)
-Pezzone = Trainer('Pezzone', [Niki], Niki, 5)
+Pezzone = Trainer('Pezzone', [Niki, Thomas, Gianfro], Niki, 5)
 
 Pezzone.attack_other_trainer(Alessandro)
 
-print(Pezzone.current_pokemon_name)
-
-
-
+#print(Pezzone.current_pokemon_name)
+Pezzone.switch_current('Thomas')
