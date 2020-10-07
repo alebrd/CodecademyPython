@@ -1,11 +1,11 @@
 class Pokemon:
-    def __init__(self, name, level, type_):   # initializing the Pokemon class
+    def __init__(self, name, level, type_, is_knocked_out=False):   # initializing the Pokemon class
         self.name = name
         self.level = level
         self.type_ = type_
         self.max_health = 80   # just read tha the max health is 80, I might be wrong though.
         self.health = 80
-        self.is_knocked_out = False
+        self.is_knocked_out = is_knocked_out
 
     def lose_health(self, points):   # the method that is gonna be used to lose health
         if type(points) is int or float:
@@ -22,10 +22,8 @@ class Pokemon:
 
     def knockedout(self):  # our method to set if a Pokemon is gone or not
         if self.health == 0:
-            self.is_knocked_out = True
             return 'Your {} has 0 health points so is gone.'.format(self.name)
         else:
-            self.is_knocked_out = False
             return f'Your {self.name} is not yet gone'
 
 
@@ -34,7 +32,7 @@ class Pokemon:
 
     def attack(self, another_pokemon):   # our attack method
         points = 25   # I dunno I think is a fair value as start attack points
-        if self.is_knocked_out is True:  # when our pokemon is Knocked we are not able to attack
+        if self.health > 0:  # when our pokemon is Knocked we are not able to attack
             if type(another_pokemon) is Pokemon:
                 if self.type_ == 'Fire':
                     if str(another_pokemon.type_) == 'Grass':
