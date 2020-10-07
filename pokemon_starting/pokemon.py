@@ -23,14 +23,18 @@ class Pokemon:
     def knockedout(self):  # our method to set if a Pokemon is gone or not
         if self.health == 0:
             self.is_knocked_out = True
-        return 'Your {} has 0 health points so is gone.'.format(self.name)
+            return 'Your {} has 0 health points so is gone.'.format(self.name)
+        else:
+            self.is_knocked_out = False
+            return f'Your {self.name} is not yet gone'
+
 
     def get_name(self):  # our get_name will be used later in the switch_current method
         return self.name
 
     def attack(self, another_pokemon):   # our attack method
-        points = 25   # I dunno I though is a fair value as start attack points
-        if self.is_knocked_out != False:  # when our pokemon is Knocked we are not able to attack
+        points = 25   # I dunno I think is a fair value as start attack points
+        if self.is_knocked_out is True:  # when our pokemon is Knocked we are not able to attack
             if type(another_pokemon) is Pokemon:
                 if self.type_ == 'Fire':
                     if str(another_pokemon.type_) == 'Grass':
@@ -101,13 +105,28 @@ class Trainer:  # our trainer class
         else:
             return 'Please insert a string'  # in case not a string is inserted
 
+Charizard = Pokemon('Charizard', 10, 'Fire')
 
-Gabri = Pokemon('Gabri', 10, 'Fire')
-Niki = Pokemon('Niki', 10, 'Grass')
-Thomas = Pokemon('Thomas', 10, 'Grass')
-Gianfro = Pokemon('Gianfro', 10, 'Water')
+Blaziken = Pokemon('Blaziken', 10, 'Fire')
+Infernape = Pokemon('Infernape', 10, 'Fire')
 
-Alessandro = Trainer('Alessandro', [Gabri], Gabri, 5)
-Pezzone = Trainer('Pezzone', [Niki, Thomas, Gianfro], Niki, 5)
 
+Bulbasaur = Pokemon('Bulbasaur', 10, 'Grass')
+Pumpkaboo = Pokemon('Pumpkaboo', 10, 'Grass')
+Celebi = Pokemon('Celebi', 10, 'Grass')
+
+Blastoise = Pokemon('Blastoise', 10, 'Water')
+Gyarados = Pokemon('Gyarados', 10, 'Water')
+Keyogre = Pokemon('Keyogre', 10, 'Water')
+
+
+Red = Trainer('Red', [Charizard, Bulbasaur, Blastoise], Charizard, 5)
+Blue = Trainer('Blue', [Blaziken, Pumpkaboo, Gyarados], Pumpkaboo, 5)
+Drake = Trainer('Drake', [Infernape, Celebi, Keyogre], Keyogre, 5)
+
+print(Bulbasaur.knockedout())
+
+print(Bulbasaur.is_knocked_out)
+
+print(Bulbasaur.attack(Keyogre))
 
