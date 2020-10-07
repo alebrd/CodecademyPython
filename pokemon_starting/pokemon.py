@@ -92,7 +92,7 @@ class Trainer:  # our trainer class
 
     def switch_current(self, name):  # our switching method
         if type(name) is str:
-            for switch in self.pokemons:
+            for switch in self.pokemons:   # TODO FIX THIS BELOW! REMOVE THE KNOCKED OUT AND USE SELF.HEALTH INSTEAD
                 if switch.is_knocked_out != False:  # if the pokemon is Knocked we won't be able to switch to it
                     pass
                 switch_name = switch.get_name()  # using the get_name defined before for us.
