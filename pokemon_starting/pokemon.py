@@ -65,11 +65,11 @@ class Pokemon:
                    '-Enemy\'s {} is type: {}.\n' \
                    '-The Enemy\'s Pokemon has lost {} points.\n' \
                    '-Your Pokemon current Health is {}.\n' \
-                   '-Enemy\'s Pokemon Health is {}'.format(self.name, self.type_, another_pokemon.name,
+                   '-Enemy\'s Pokemon Health is {}.'.format(self.name, self.type_, another_pokemon.name,
                                                            another_pokemon.type_, points,
                                                            self.health, another_pokemon.health)
         else:
-            return f'The Pokemon {self.name} is Knocked out so it can\'t attack'
+            return f'The Pokemon {self.name} is Knocked out so it can\'t attack.'
 
     def get_name(self):                                 # our get_name will be used later in the switch_current method
         return self.name
@@ -113,7 +113,7 @@ class Trainer:                                           # our trainer class
             return f'Your current Pokemon selected is now {self.current_pokemon.name}.\n' \
                    f'If your Pokemon does not switch is probably dead or does not exist.'
         else:
-            return 'Please insert a string name'          # in case not a string is inserted
+            return 'Please insert a string name.'          # in case not a string is inserted
 
     def get_current_name(self):
         return f'Your current Pokemon selected name is {self.current_pokemon.name}.'
